@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello IndexController!{% endblock %}
+
+{% block body %}
+    <h1>Models</h1>
+    <div class="modelsContainer">
+    {% for model in models %}
+        <div class="modelContainer" data-model-id={{ model.id }}>
+            <div class="textContainer">
+                <p>{{ model.title }}</p>
+                <p style="overflow: hidden; white-space: nowrap; max-width: 270px; height: 18px">on {{ model.routeEntity.routeTemplate }}</p>
+            </div>
+            <div class="buttonsContainer">
+                <form action="/model/{{ model.id }}/play" method="post">
+                    <button type="submit">Play</button>
+                </form>
+                <button onclick="window.location.href='/model/{{ model.id }}/edit';">
+                    Edit
+                </button>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+
+    <h1>Events</h1>
+    <div class="modelsContainer">
+        {% for event in events %}
+            <div class="modelContainer" data-event-id={{ event.id }}>
+                <div class="textContainer">
+                    <p>{{ event.title }}</p>
+                </div>
+                <button onclick="window.location.href='/event/{{ event.id }}/edit';">
+                    Edit
+                </button>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

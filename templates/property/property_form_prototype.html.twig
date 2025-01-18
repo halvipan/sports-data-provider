@@ -1,0 +1,40 @@
+<div class="inputContainer border" style="align-items: center">
+    <div class="inputContainer">
+        <label for="key">Key</label>
+        <input type="text" id="key" name="__name__[key]">
+    </div>
+
+    <div class="buttonsContainer">
+        <div class="inputContainer">
+            <label for="simpleValue">Simple Value</label>
+            <input type="text" id="simpleValue" name="__name__[simpleValue]">
+        </div>
+
+        <div class="inputContainer">
+            <label for="routeVariableValue">Route Variable Value</label>
+            <select name="__name__[routeVariableValue]" id="routeVariableValue">
+                <option selected value> -- select an option -- </option>
+                {% for variable in routeVariables %}
+                    <option value="{{ variable }}">{{ variable }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="inputContainer">
+            <label for="eventDataKeyValue">Event Data Key Value</label>
+            <select name="__name__[eventDataKeyValue]" id="eventDataKeyValue">
+                <option selected value> -- select an option -- </option>
+                {% for key in eventDataKeys %}
+                    <option value="{{ key }}">{{ key }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <div id="" data-index="0" data-name="__name__">
+    </div>
+    <button type="button" onclick="addFormToCollection(event)">
+        Add Child
+    </button>
+
+</div>

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <form method="POST" action="/event/{{ event.id }}/edit/staticKeys">
+
+        {% for staticKey in event.staticDataKeys %}
+            <label for="{{ staticKey }}">{{ staticKey }}</label>
+            <input type="text" id="{{ staticKey }}" name="staticValues[{{ staticKey }}]" {% if attribute(event.staticDataValues, staticKey) is defined %}value="{{ attribute(event.staticDataValues, staticKey) }}"{% endif %}>
+        {% endfor %}
+
+        <input type="submit" value="Submit">
+    </form>
+{% endblock %}

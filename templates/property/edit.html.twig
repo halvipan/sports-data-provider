@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <form method="POST" action="/edit/property/{{ property.id }}">
+        <div data-index="{{ property.children|length }}" data-name="properties">
+            {% for child in property.children %}
+                {%
+                    include "property/property_form.html.twig"
+                    with {property: child, name: 'properties[children][' ~ loop.index0 ~ ']'}
+                %}
+            {% endfor %}
+        </div>
+        <button type="button" onclick="addFormToCollection(event)">
+            Add Child
+        </button>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        let prototype = `{% include 'property/property_form_prototype.html.twig' %}`;
+
+        function addFormToCollection(e) {
+            const collectionHolder = e.currentTarget.previousElementSibling;
+
+            const item = document.createElement('div');
+            item.innerHTML = prototype;
+            item.innerHTML = item.innerHTML.replace(/__index__/g, collectionHolder.dataset.index);
+            const name = collectionHolder.dataset.name + '[children][' + collectionHolder.dataset.index + ']'
+            item.innerHTML = item.innerHTML.replace(/__name__/g, name);
+
+            collectionHolder.appendChild(item);
+            collectionHolder.dataset.index++;
+        }
+    </script>
+{% endblock %}

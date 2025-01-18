@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <form method="POST" action="/event/{{ event.id }}/edit">
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title" value="{{ event.title }}">
+
+        <label for="staticKeys">Static Keys</label>
+        <div id="staticKeys" data-index="{{ event.staticDataKeys|length }}" class="columnContainer">
+            {% for staticKey in event.staticDataKeys %}
+                <input type="text" id="staticKeys" name="staticKeys[{{ loop.index0 }}]" value="{{ staticKey }}">
+            {% endfor %}
+        </div>
+        <button type="button" onclick="addItemToCollection(event)" data-collectionholderid="staticKeys">Add Key</button>
+
+        <label for="evolvingKeys">Evolving Keys</label>
+        <div id="evolvingKeys" data-index="{{ event.evolvingDataKeys|length }}" class="columnContainer">
+            {% for evolvingKey in event.evolvingDataKeys %}
+                <input type="text" id="evolvingKeys" name="evolvingKeys[{{ loop.index0 }}]" value="{{ evolvingKey }}">
+            {% endfor %}
+        </div>
+        <button type="button" onclick="addItemToCollection(event)" data-collectionholderid="evolvingKeys">Add Key</button>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        const prototype = `
+                <input type="text" id="__keyType__" name="__keyType__[__name__]">
+        `;
+
+        function addItemToCollection(event) {
+            const collectionHolder = document.querySelector('#' + event.currentTarget.dataset.collectionholderid);
+            const index = collectionHolder.dataset.index;
+
+            let item = document.createElement('div');
+            item.innerHTML = prototype;
+            item.innerHTML = item.innerHTML.replace(/__keyType__/g, event.currentTarget.dataset.collectionholderid);
+            item.innerHTML = item.innerHTML.replace(/__name__/g, index);
+            item = item.firstElementChild;
+            collectionHolder.appendChild(item);
+
+            collectionHolder.dataset.index++;
+        }
+    </script>
+{% endblock %}

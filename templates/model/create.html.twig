@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <form method="POST" action="/model/create">
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title">
+        <label for="path">Path</label>
+        <input type="text" id="path" name="path">
+        <label for="event">Event</label>
+        <select name="event" id="event" >
+            {% for event in events %}
+                <option value="{{ event.id }}">{{ event.title }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Submit">
+    </form>
+{% endblock %}

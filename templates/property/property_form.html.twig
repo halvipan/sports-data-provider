@@ -1,0 +1,46 @@
+<div class="inputContainer border" style="align-items: center">
+    <input type="hidden" name="{{ name }}[id]" value="{{ property.id }}">
+
+    <div class="inputContainer">
+        <label for="key">Key</label>
+        <input type="text" id="key" name="{{ name }}[key]" value="{{ property.propertyKey }}">
+    </div>
+
+    <div class="buttonsContainer">
+        <div class="inputContainer">
+            <label for="simpleValue">Simple Value</label>
+            <input type="text" id="simpleValue" name="{{ name }}[simpleValue]" value="{{ property.simpleValue }}">
+        </div>
+        <div class="inputContainer">
+            <label for="routeVariableValue">Route Variable Value</label>
+            <select name="{{ name }}[routeVariableValue]" id="routeVariableValue">
+                <option selected value> -- select an option -- </option>
+                {% for variable in routeVariables %}
+                    <option value="{{ variable }}" {% if property.routeValue == variable %} selected{% endif %}>{{ variable }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="inputContainer">
+            <label for="eventDataKeyValue">Event Data Key Value</label>
+            <select name="{{ name }}[eventDataKeyValue]" id="eventDataKeyValue">
+                <option selected value> -- select an option -- </option>
+                {% for key in eventDataKeys %}
+                    <option value="{{ key }}" {% if property.eventDataKeyValue == key %} selected{% endif %}>{{ key }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+    </div>
+
+    <div data-name="{{ name }}" data-index="{{ property.children|length }}">
+        {% if property.children is defined %}
+            {% for child in property.children %}
+                {% include "property/property_form.html.twig" with {property: child, name: name ~ '[children][' ~ loop.index0 ~ ']'} %}
+            {% endfor %}
+        {% endif %}
+    </div>
+    <button type="button" onclick="addFormToCollection(event)">
+        Add Child
+    </button>
+</div>
